@@ -13,3 +13,11 @@ We would like you to create a very basic spinning slot machine in PIXI, using tw
         [3, 6, 4, 5, 2, 5, 5, 6]
         [3, 5, 4, 6, 2, 5, 2, 6, 1, 0]
         [1, 1, 6, 4, 1, 3, 2, 0, 3, 3]
+
+## Resources
+https://pixijs.io/examples/#/demos-advanced/slots.js
+https://www.pixijselementals.com/
+https://createjs.com/docs/tweenjs/modules/TweenJS.html
+https://miltoncandelero.github.io/tweedle.js/index.html
+https://github.com/kittykatattack/learningPixi
+https://www.trysmudford.com/blog/linear-interpolation-functions/
