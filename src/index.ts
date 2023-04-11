@@ -43,7 +43,7 @@ function onAssetsLoaded() {
     PIXI.Texture.from("nine.png"),
   ];
 
-  const slotReels = [
+  const reelStrips = [
     [5, 4, 1, 3, 3, 5, 4, 0, 4, 3],
     [5, 5, 1, 4, 2, 0, 2, 3, 5, 5, 3, 1, 2, 4, 0],
     [3, 6, 4, 5, 2, 5, 5, 6],
@@ -70,9 +70,8 @@ function onAssetsLoaded() {
     rc.filters = [reel.blur];
 
     // Build the symbols
-    for (let j = 0; j < 4; j++) {
-      // First 4 symbols of each slotReel
-      const texturesIndex = slotReels[i][j];
+    for (let j = 0; j < reelStrips[i].length; j++) {
+      const texturesIndex = reelStrips[i][j];
       const symbol = new PIXI.Sprite(slotTextures[texturesIndex]);
       // Scale the symbol to fit symbol area.
       symbol.y = j * SYMBOL_SIZE;
@@ -183,17 +182,6 @@ function onAssetsLoaded() {
         const s = r.symbols[j];
         const prevy = s.y;
         s.y = ((r.position + j) % r.symbols.length) * SYMBOL_SIZE - SYMBOL_SIZE;
-        if (s.y < 0 && prevy > SYMBOL_SIZE) {
-          // Detect going over and swap a texture.
-          // This should in proper product be determined from some logical reel.
-          s.texture =
-            slotTextures[Math.floor(Math.random() * slotTextures.length)];
-          s.scale.x = s.scale.y = Math.min(
-            SYMBOL_SIZE / s.texture.width,
-            SYMBOL_SIZE / s.texture.height
-          );
-          s.x = Math.round((SYMBOL_SIZE - s.width) / 2);
-        }
       }
     }
   });
