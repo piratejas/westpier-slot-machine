@@ -81,7 +81,7 @@ function onAssetsLoaded() {
   // Build top & bottom covers and position reelContainer
   const margin = (app.screen.height - SYMBOL_SIZE * 3) / 2;
   reelContainer.y = margin;
-  reelContainer.x = Math.round(app.screen.width - REEL_WIDTH * 5);
+  reelContainer.x = Math.round(app.screen.width - REEL_WIDTH * 5) / 2;
   const top = new PIXI.Graphics();
   top.beginFill(0, 1);
   top.drawRect(0, 0, app.screen.width, margin);
