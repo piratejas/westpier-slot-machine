@@ -9,6 +9,8 @@ const app = new PIXI.Application({
   height: window.innerHeight,
 });
 
+globalThis.__PIXI_APP__ = app;
+
 PIXI.Assets.load([
   "one.png",
   "two.png",
@@ -41,6 +43,14 @@ function onAssetsLoaded() {
     PIXI.Texture.from("nine.png"),
   ];
 
+  const slotReels = [
+    [5, 4, 1, 3, 3, 5, 4, 0, 4, 3],
+    [5, 5, 1, 4, 2, 0, 2, 3, 5, 5, 3, 1, 2, 4, 0],
+    [3, 6, 4, 5, 2, 5, 5, 6],
+    [3, 5, 4, 6, 2, 5, 2, 6, 1, 0],
+    [1, 1, 6, 4, 1, 3, 2, 0, 3, 3],
+  ];
+
   const reels = [];
   const reelContainer = new PIXI.Container();
   for (let i = 0; i < 5; i++) {
@@ -61,9 +71,9 @@ function onAssetsLoaded() {
 
     // Build the symbols
     for (let j = 0; j < 4; j++) {
-      const symbol = new PIXI.Sprite(
-        slotTextures[Math.floor(Math.random() * slotTextures.length)]
-      );
+      // First 4 symbols of each slotReel
+      const texturesIndex = slotReels[i][j];
+      const symbol = new PIXI.Sprite(slotTextures[texturesIndex]);
       // Scale the symbol to fit symbol area.
       symbol.y = j * SYMBOL_SIZE;
       symbol.scale.x = symbol.scale.y = Math.min(
