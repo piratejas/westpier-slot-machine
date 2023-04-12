@@ -12,6 +12,7 @@ const app = new PIXI.Application({
 
 globalThis.__PIXI_APP__ = app;
 
+// Preloads assets and calls handler
 PIXI.Assets.load([
   "one.png",
   "two.png",
@@ -28,9 +29,9 @@ PIXI.Assets.load([
 const REEL_WIDTH = 160;
 const SYMBOL_SIZE = 150;
 
-// onAssetsLoaded handler builds the example.
+// onAssetsLoaded handler builds the slot machine
 function onAssetsLoaded() {
-  // Create different slot symbols.
+  // Create different slot symbols
   const slotTextures = [
     PIXI.Texture.from("zero.png"),
     PIXI.Texture.from("one.png"),
@@ -74,7 +75,7 @@ function onAssetsLoaded() {
     for (let j = 0; j < reelStrips[i].length; j++) {
       const texturesIndex = reelStrips[i][j];
       const symbol = new PIXI.Sprite(slotTextures[texturesIndex]);
-      // Scale the symbol to fit symbol area.
+      // Scale the symbol to fit symbol area
       symbol.y = j * SYMBOL_SIZE;
       symbol.scale.x = symbol.scale.y = Math.min(
         SYMBOL_SIZE / symbol.width,
@@ -99,6 +100,8 @@ function onAssetsLoaded() {
   bottom.beginFill(0, 1);
   bottom.drawRect(0, SYMBOL_SIZE * 3 + margin, app.screen.width, margin);
   const textureButton = PIXI.Texture.from("button.png");
+
+  // Build and position button
   const button = new PIXI.Sprite(textureButton);
   button.scale.set(0.3, 0.25);
   button.anchor.set(0.5);
@@ -137,7 +140,7 @@ function onAssetsLoaded() {
   app.stage.addChild(top);
   app.stage.addChild(bottom);
 
-  // Set the interactivity.
+  // Set the interactivity
   button.interactive = true;
   button.cursor = "pointer";
   button.addListener("pointerdown", () => {
@@ -146,7 +149,7 @@ function onAssetsLoaded() {
 
   let running = false;
 
-  // Function to start playing.
+  // Function to start playing
   function startPlay() {
     if (running) return;
     running = true;
@@ -165,35 +168,19 @@ function onAssetsLoaded() {
           }
         })
         .start();
-
-      // tweenTo(
-      //   r,
-      //   "position",
-      //   target,
-      //   time,
-      //   backout(0.2),
-      //   null,
-      //   i === reels.length - 1 ? reelsComplete : null
-      // );
     }
   }
 
-  // Reels done handler.
-  // function reelsComplete() {
-  //   running = false;
-  // }
-
-  // Listen for animate update.
+  // Listen for animate update
   app.ticker.add((delta) => {
     // Update the slots.
     for (let i = 0; i < reels.length; i++) {
       const r = reels[i];
-      // Update blur filter y amount based on speed.
-      // This would be better if calculated with time in mind also. Now blur depends on frame rate.
+      // Update blur filter y amount based on speed
       r.blur.blurY = (r.position - r.previousPosition) * 8;
       r.previousPosition = r.position;
 
-      // Update symbol positions on reel.
+      // Update symbol positions on reel
       for (let j = 0; j < r.symbols.length; j++) {
         const s = r.symbols[j];
         s.y = ((r.position + j) % r.symbols.length) * SYMBOL_SIZE - SYMBOL_SIZE;
@@ -202,58 +189,12 @@ function onAssetsLoaded() {
   });
 }
 
-// Very simple tweening utility function. This should be replaced with a proper tweening library in a real product.
-// const tweening = [];
-// function tweenTo(object, property, target, time, easing, onchange, oncomplete) {
-//   const tween = {
-//     object,
-//     property,
-//     propertyBeginValue: object[property],
-//     target,
-//     easing,
-//     time,
-//     change: onchange,
-//     complete: oncomplete,
-//     start: Date.now(),
-//   };
-
-//   tweening.push(tween);
-//   console.log(object, property, target, time);
-//   return tween;
-// }
-// // Listen for animate update.
+// Listen for animate update
 app.ticker.add((delta) => {
   TWEEN.update();
-  //   // const now = Date.now();
-  //   // const remove = [];
-  //   // for (let i = 0; i < tweening.length; i++) {
-  //   //   const t = tweening[i];
-  //   //   const phase = Math.min(1, (now - t.start) / t.time);
-
-  //   //   t.object[t.property] = lerp(
-  //   //     t.propertyBeginValue,
-  //   //     t.target,
-  //   //     t.easing(phase)
-  //   //   );
-  //   //   if (t.change) t.change(t);
-  //   //   if (phase === 1) {
-  //   //     t.object[t.property] = t.target;
-  //   //     if (t.complete) t.complete(t);
-  //   //     remove.push(t);
-  //   //   }
-  //   // }
-  //   // for (let i = 0; i < remove.length; i++) {
-  //   //   tweening.splice(tweening.indexOf(remove[i]), 1);
-  //   // }
 });
 
-// // Basic lerp funtion.
-// function lerp(a1, a2, t) {
-//   return a1 * (1 - t) + a2 * t;
-// }
-
-// Backout function from tweenjs.
-// https://github.com/CreateJS/TweenJS/blob/master/src/tweenjs/Ease.js
+// Custom easing function
 function backout(amount) {
   return (t) => --t * t * ((amount + 1) * t + amount) + 1;
 }

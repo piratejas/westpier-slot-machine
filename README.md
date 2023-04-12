@@ -23,11 +23,10 @@ The symbol and button graphics you use can come from anywhere. You could find so
 
 ## Resources
 
+https://pixijs.download/dev/docs/index.html  
 https://pixijs.io/examples/#/demos-advanced/slots.js  
 https://www.pixijselementals.com/  
 https://createjs.com/docs/tweenjs/modules/TweenJS.html  
 https://github.com/tweenjs/tween.js/blob/HEAD/docs/user_guide.md  
-https://miltoncandelero.github.io/tweedle.js/index.html  
-https://github.com/kittykatattack/learningPixi  
 https://www.trysmudford.com/blog/linear-interpolation-functions/  
 [Tween Movements with JavaScript](https://www.youtube.com/watch?v=YKb50865IG8)
