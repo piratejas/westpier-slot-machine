@@ -100,14 +100,16 @@ function onAssetsLoaded() {
   bottom.drawRect(0, SYMBOL_SIZE * 3 + margin, app.screen.width, margin);
   const textureButton = PIXI.Texture.from("button.png");
   const button = new PIXI.Sprite(textureButton);
-  button.scale.set(0.3);
+  button.scale.set(0.3, 0.25);
   button.anchor.set(0.5);
   button.x = Math.round((bottom.width - button.width) / 2);
   button.y =
-    app.screen.height - margin + Math.round((margin - button.height) / 2);
+    app.screen.height -
+    margin +
+    Math.round((bottom.height - button.height) / 2);
   bottom.addChild(button);
 
-  // Add play text
+  // Add button text
   const style = new PIXI.TextStyle({
     fill: "#ffffff",
     fillGradientStops: [0.6],
