@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import * as TWEEDLE from "tweedle";
 
 const app = new PIXI.Application({
   view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -180,7 +181,6 @@ function onAssetsLoaded() {
       // Update symbol positions on reel.
       for (let j = 0; j < r.symbols.length; j++) {
         const s = r.symbols[j];
-        const prevy = s.y;
         s.y = ((r.position + j) % r.symbols.length) * SYMBOL_SIZE - SYMBOL_SIZE;
       }
     }

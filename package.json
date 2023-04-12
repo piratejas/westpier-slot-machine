@@ -7,8 +7,8 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "pixi.js": "^7.1.2",
-    "tweedle": "^0.10.7"
+    "@tweenjs/tween.js": "^19.0.0",
+    "pixi.js": "^7.1.2"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
