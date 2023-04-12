@@ -5,7 +5,7 @@ const app = new PIXI.Application({
   view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
   resolution: window.devicePixelRatio || 1,
   autoDensity: true,
-  backgroundColor: 0x6495ed,
+  backgroundColor: 0xffffff,
   width: window.innerWidth,
   height: window.innerHeight,
 });
@@ -96,35 +96,39 @@ function onAssetsLoaded() {
   // top.beginFill(0, 1);
   top.drawRect(0, 0, app.screen.width, margin);
   const bottom = new PIXI.Graphics();
-  // bottom.beginFill(0, 1);
+  bottom.beginFill(0, 1);
   bottom.drawRect(0, SYMBOL_SIZE * 3 + margin, app.screen.width, margin);
+  const textureButton = PIXI.Texture.from("button.png");
+  const button = new PIXI.Sprite(textureButton);
+  button.scale.set(0.3);
+  button.anchor.set(0.5);
+  button.x = Math.round((bottom.width - button.width) / 2);
+  button.y =
+    app.screen.height - margin + Math.round((margin - button.height) / 2);
+  bottom.addChild(button);
 
   // Add play text
   const style = new PIXI.TextStyle({
-    fontFamily: "Arial",
+    fill: "#ffffff",
+    fillGradientStops: [0.6],
+    fontFamily: "Georgia, serif",
     fontSize: 36,
     fontStyle: "italic",
+    fontVariant: "small-caps",
     fontWeight: "bold",
-    fill: ["#ffffff", "#00ff99"], // gradient
-    stroke: "#4a1850",
-    strokeThickness: 5,
-    dropShadow: true,
-    dropShadowColor: "#000000",
-    dropShadowBlur: 4,
-    dropShadowAngle: Math.PI / 6,
-    dropShadowDistance: 6,
-    wordWrap: true,
-    wordWrapWidth: 440,
+    letterSpacing: 2,
+    lineJoin: "round",
+    stroke: "#634f4f",
+    strokeThickness: 2,
   });
 
-  const playText = new PIXI.Text("Press here to spin!", style);
-  playText.x = Math.round((bottom.width - playText.width) / 2);
-  playText.y =
-    app.screen.height - margin + Math.round((margin - playText.height) / 2);
-  bottom.addChild(playText);
+  const buttonText = new PIXI.Text("SPIN!", style);
+  buttonText.scale.set(3);
+  buttonText.anchor.set(0.5);
+  button.addChild(buttonText);
 
   // Add header text
-  const headerText = new PIXI.Text("BASIC SLOT MACHINE", style);
+  const headerText = new PIXI.Text("MY FIRST SLOT MACHINE", style);
   headerText.x = Math.round((top.width - headerText.width) / 2);
   headerText.y = Math.round((margin - headerText.height) / 2);
   top.addChild(headerText);
@@ -133,9 +137,9 @@ function onAssetsLoaded() {
   app.stage.addChild(bottom);
 
   // Set the interactivity.
-  bottom.interactive = true;
-  bottom.cursor = "pointer";
-  bottom.addListener("pointerdown", () => {
+  button.interactive = true;
+  button.cursor = "pointer";
+  button.addListener("pointerdown", () => {
     startPlay();
   });
 
