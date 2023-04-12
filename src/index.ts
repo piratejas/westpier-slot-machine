@@ -93,10 +93,10 @@ function onAssetsLoaded() {
   reelContainer.y = margin;
   reelContainer.x = Math.round(app.screen.width - REEL_WIDTH * 5) / 2;
   const top = new PIXI.Graphics();
-  top.beginFill(0, 1);
+  // top.beginFill(0, 1);
   top.drawRect(0, 0, app.screen.width, margin);
   const bottom = new PIXI.Graphics();
-  bottom.beginFill(0, 1);
+  // bottom.beginFill(0, 1);
   bottom.drawRect(0, SYMBOL_SIZE * 3 + margin, app.screen.width, margin);
 
   // Add play text
@@ -150,13 +150,13 @@ function onAssetsLoaded() {
       const r = reels[i];
       const extra = Math.floor(Math.random() * 3);
       const target = r.position + 10 + i * 5 + extra;
-      const time = 2500 + i * 600 + extra * 600;
+      const time = 2000 + i * 250;
       tweenTo(
         r,
         "position",
         target,
         time,
-        backout(0.5),
+        backout(0.2),
         null,
         i === reels.length - 1 ? reelsComplete : null
       );
@@ -203,6 +203,7 @@ function tweenTo(object, property, target, time, easing, onchange, oncomplete) {
   };
 
   tweening.push(tween);
+  console.log(object, property, target, time);
   return tween;
 }
 // Listen for animate update.
