@@ -93,7 +93,7 @@ function onAssetsLoaded() {
   reelContainer.y = margin;
   reelContainer.x = Math.round(app.screen.width - REEL_WIDTH * 5) / 2;
   const top = new PIXI.Graphics();
-  // top.beginFill(0, 1);
+  top.beginFill(0, 1);
   top.drawRect(0, 0, app.screen.width, margin);
   const bottom = new PIXI.Graphics();
   bottom.beginFill(0, 1);
@@ -113,15 +113,14 @@ function onAssetsLoaded() {
   const style = new PIXI.TextStyle({
     fill: "#ffffff",
     fillGradientStops: [0.6],
-    fontFamily: "Georgia, serif",
+    fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
     fontSize: 36,
-    fontStyle: "italic",
     fontVariant: "small-caps",
     fontWeight: "bold",
     letterSpacing: 2,
     lineJoin: "round",
-    stroke: "#634f4f",
-    strokeThickness: 2,
+    stroke: "#f20707",
+    strokeThickness: 4,
   });
 
   const buttonText = new PIXI.Text("SPIN!", style);
@@ -157,22 +156,32 @@ function onAssetsLoaded() {
       const extra = Math.floor(Math.random() * 3);
       const target = r.position + 10 + i * 5 + extra;
       const time = 2000 + i * 250;
-      tweenTo(
-        r,
-        "position",
-        target,
-        time,
-        backout(0.2),
-        null,
-        i === reels.length - 1 ? reelsComplete : null
-      );
+      new TWEEN.Tween(r)
+        .to({ position: target }, time)
+        .easing(backout(0.2))
+        .onComplete(() => {
+          if (i === reels.length - 1) {
+            running = false;
+          }
+        })
+        .start();
+
+      // tweenTo(
+      //   r,
+      //   "position",
+      //   target,
+      //   time,
+      //   backout(0.2),
+      //   null,
+      //   i === reels.length - 1 ? reelsComplete : null
+      // );
     }
   }
 
   // Reels done handler.
-  function reelsComplete() {
-    running = false;
-  }
+  // function reelsComplete() {
+  //   running = false;
+  // }
 
   // Listen for animate update.
   app.ticker.add((delta) => {
@@ -194,53 +203,54 @@ function onAssetsLoaded() {
 }
 
 // Very simple tweening utility function. This should be replaced with a proper tweening library in a real product.
-const tweening = [];
-function tweenTo(object, property, target, time, easing, onchange, oncomplete) {
-  const tween = {
-    object,
-    property,
-    propertyBeginValue: object[property],
-    target,
-    easing,
-    time,
-    change: onchange,
-    complete: oncomplete,
-    start: Date.now(),
-  };
+// const tweening = [];
+// function tweenTo(object, property, target, time, easing, onchange, oncomplete) {
+//   const tween = {
+//     object,
+//     property,
+//     propertyBeginValue: object[property],
+//     target,
+//     easing,
+//     time,
+//     change: onchange,
+//     complete: oncomplete,
+//     start: Date.now(),
+//   };
 
-  tweening.push(tween);
-  console.log(object, property, target, time);
-  return tween;
-}
-// Listen for animate update.
+//   tweening.push(tween);
+//   console.log(object, property, target, time);
+//   return tween;
+// }
+// // Listen for animate update.
 app.ticker.add((delta) => {
-  const now = Date.now();
-  const remove = [];
-  for (let i = 0; i < tweening.length; i++) {
-    const t = tweening[i];
-    const phase = Math.min(1, (now - t.start) / t.time);
+  TWEEN.update();
+  //   // const now = Date.now();
+  //   // const remove = [];
+  //   // for (let i = 0; i < tweening.length; i++) {
+  //   //   const t = tweening[i];
+  //   //   const phase = Math.min(1, (now - t.start) / t.time);
 
-    t.object[t.property] = lerp(
-      t.propertyBeginValue,
-      t.target,
-      t.easing(phase)
-    );
-    if (t.change) t.change(t);
-    if (phase === 1) {
-      t.object[t.property] = t.target;
-      if (t.complete) t.complete(t);
-      remove.push(t);
-    }
-  }
-  for (let i = 0; i < remove.length; i++) {
-    tweening.splice(tweening.indexOf(remove[i]), 1);
-  }
+  //   //   t.object[t.property] = lerp(
+  //   //     t.propertyBeginValue,
+  //   //     t.target,
+  //   //     t.easing(phase)
+  //   //   );
+  //   //   if (t.change) t.change(t);
+  //   //   if (phase === 1) {
+  //   //     t.object[t.property] = t.target;
+  //   //     if (t.complete) t.complete(t);
+  //   //     remove.push(t);
+  //   //   }
+  //   // }
+  //   // for (let i = 0; i < remove.length; i++) {
+  //   //   tweening.splice(tweening.indexOf(remove[i]), 1);
+  //   // }
 });
 
-// Basic lerp funtion.
-function lerp(a1, a2, t) {
-  return a1 * (1 - t) + a2 * t;
-}
+// // Basic lerp funtion.
+// function lerp(a1, a2, t) {
+//   return a1 * (1 - t) + a2 * t;
+// }
 
 // Backout function from tweenjs.
 // https://github.com/CreateJS/TweenJS/blob/master/src/tweenjs/Ease.js
