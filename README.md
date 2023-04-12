@@ -1,6 +1,6 @@
 # westpier-slot-machine
 
-Basic slot machine with Typescript, pixi.js &amp; tweedle.js
+Basic slot machine with Typescript, pixi.js &amp; tween.js
 
 ## Project Brief
 
