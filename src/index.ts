@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import * as TWEEDLE from "tweedle";
+import TWEEN from "@tweenjs/tween.js";
 
 const app = new PIXI.Application({
   view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
