@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import TWEEN from "@tweenjs/tween.js";
+import { sound } from "@pixi/sound";
 
 const app = new PIXI.Application({
   view: document.getElementById("pixi-canvas") as HTMLCanvasElement,
@@ -26,12 +27,17 @@ PIXI.Assets.load([
   "zero.png",
 ]).then(onAssetsLoaded);
 
+sound.add("spin", "spinning.wav");
+sound.add("stop", "stop.wav");
+sound.volume("spin", 0.01);
+sound.volume("stop", 0.05);
+
 const REEL_WIDTH = 160;
 const SYMBOL_SIZE = 150;
 
 // onAssetsLoaded handler builds the slot machine
 function onAssetsLoaded() {
-  // Create different slot symbols
+  // Create different slot textures
   const slotTextures = [
     PIXI.Texture.from("zero.png"),
     PIXI.Texture.from("one.png"),
@@ -52,7 +58,7 @@ function onAssetsLoaded() {
     [3, 5, 4, 6, 2, 5, 2, 6, 1, 0],
     [1, 1, 6, 4, 1, 3, 2, 0, 3, 3],
   ];
-
+  // Create each reel
   interface Reel {
     container: PIXI.Container;
     strip: number[];
@@ -212,11 +218,15 @@ function onAssetsLoaded() {
       const time = 2000 + i * 250;
       new TWEEN.Tween(r)
         .to({ position: target }, time)
+        .onStart(() => {
+          sound.play("spin");
+        })
         .easing(backout(0.2))
         .onComplete(() => {
           if (i === reels.length - 1) {
             running = false;
           }
+          sound.play("stop");
         })
         .start();
     }
