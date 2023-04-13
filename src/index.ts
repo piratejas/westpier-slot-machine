@@ -178,8 +178,8 @@ function onAssetsLoaded() {
   }
 
   // Listen for animate update
-  app.ticker.add((delta) => {
-    // Update the slots.
+  app.ticker.add(() => {
+    // Update the slots
     for (let i = 0; i < reels.length; i++) {
       const r = reels[i];
       // Update blur filter y amount based on speed
@@ -192,13 +192,10 @@ function onAssetsLoaded() {
         s.y = ((r.position + j) % r.symbols.length) * SYMBOL_SIZE - SYMBOL_SIZE;
       }
     }
+    // Update tweens group
+    TWEEN.update();
   });
 }
-
-// Listen for animate update
-app.ticker.add((delta) => {
-  TWEEN.update();
-});
 
 // Custom easing function
 function backout(amount: number) {
