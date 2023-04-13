@@ -76,6 +76,8 @@ function onAssetsLoaded() {
       previousPosition: 0,
       blur: new PIXI.BlurFilter(),
     };
+
+    // Randomise start of sequence
     const randomStartIndex = Math.floor(Math.random() * reelStrips[i].length);
     const randomStartSequence = [
       ...reelStrips[i].slice(randomStartIndex),
@@ -126,7 +128,17 @@ function onAssetsLoaded() {
     Math.round((bottom.height - button.height) / 2);
   bottom.addChild(button);
 
-  // Add button text
+  // Add buttonDown effect
+  const onButtonDown = function () {
+    button.scale.set(0.25, 0.2);
+    buttonText.scale.set(2.95);
+  };
+  const onButtonUp = function () {
+    button.scale.set(0.3, 0.25);
+    buttonText.scale.set(3);
+  };
+
+  // Add text style
   const style = new PIXI.TextStyle({
     fill: "#ffffff",
     fillGradientStops: [0.6],
@@ -140,6 +152,7 @@ function onAssetsLoaded() {
     strokeThickness: 4,
   });
 
+  // Add button text
   const buttonText = new PIXI.Text("SPIN!", style);
   buttonText.scale.set(3);
   buttonText.anchor.set(0.5);
@@ -157,6 +170,7 @@ function onAssetsLoaded() {
   // Set the interactivity
   button.interactive = true;
   button.cursor = "pointer";
+  button.on("pointerdown", onButtonDown).on("pointerup", onButtonUp);
   button.addListener("pointerdown", () => {
     startPlay();
   });
