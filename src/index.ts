@@ -105,7 +105,7 @@ function onAssetsLoaded() {
   }
   app.stage.addChild(reelContainer);
 
-  // Build top & bottom covers and position reelContainer
+  // Build top, bottom, left & right covers and position reelContainer
   const margin = (app.screen.height - SYMBOL_SIZE * 3) / 2;
   reelContainer.y = margin;
   reelContainer.x = Math.round(app.screen.width - REEL_WIDTH * 5) / 2;
@@ -163,7 +163,7 @@ function onAssetsLoaded() {
   const style = new PIXI.TextStyle({
     fill: "#ffffff",
     fillGradientStops: [0.6],
-    fontFamily: '"Trebuchet MS", Helvetica, sans-serif',
+    fontFamily: '"Palatino Linotype", "Book Antiqua", Palatino, serif',
     fontSize: 36,
     fontVariant: "small-caps",
     fontWeight: "bold",
