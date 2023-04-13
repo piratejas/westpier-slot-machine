@@ -2,6 +2,7 @@
   "repository": {
     "url": "git+https://github.com/piratejas/westpier-slot-machine.git"
   },
+  "homepage": "http://piratejas.github.io/westpier-slot-machine",
   "license": "",
   "scripts": {
     "start": "webpack serve --mode=development",
