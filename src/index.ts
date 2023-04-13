@@ -53,14 +53,21 @@ function onAssetsLoaded() {
     [1, 1, 6, 4, 1, 3, 2, 0, 3, 3],
   ];
 
-  const reels = [];
+  interface Reel {
+    container: PIXI.Container;
+    symbols: PIXI.Sprite[];
+    position: number;
+    previousPosition: number;
+    blur: PIXI.BlurFilter;
+  }
+  const reels: Reel[] = [];
   const reelContainer = new PIXI.Container();
   for (let i = 0; i < 5; i++) {
     const rc = new PIXI.Container();
     rc.x = i * REEL_WIDTH;
     reelContainer.addChild(rc);
 
-    const reel = {
+    const reel: Reel = {
       container: rc,
       symbols: [],
       position: 0,
@@ -77,10 +84,9 @@ function onAssetsLoaded() {
       const symbol = new PIXI.Sprite(slotTextures[texturesIndex]);
       // Scale the symbol to fit symbol area
       symbol.y = j * SYMBOL_SIZE;
-      symbol.scale.x = symbol.scale.y = Math.min(
-        SYMBOL_SIZE / symbol.width,
-        SYMBOL_SIZE / symbol.height
-      );
+      symbol.scale.x = symbol.scale.y =
+        Math.min(SYMBOL_SIZE / symbol.width, SYMBOL_SIZE / symbol.height) *
+        0.95;
       symbol.x = Math.round((SYMBOL_SIZE - symbol.width) / 2);
       reel.symbols.push(symbol);
       rc.addChild(symbol);
@@ -195,6 +201,6 @@ app.ticker.add((delta) => {
 });
 
 // Custom easing function
-function backout(amount) {
-  return (t) => --t * t * ((amount + 1) * t + amount) + 1;
+function backout(amount: number) {
+  return (t: number) => --t * t * ((amount + 1) * t + amount) + 1;
 }
