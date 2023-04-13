@@ -111,11 +111,32 @@ function onAssetsLoaded() {
   reelContainer.x = Math.round(app.screen.width - REEL_WIDTH * 5) / 2;
   const top = new PIXI.Graphics();
   top.beginFill(0, 1);
-  top.drawRect(0, 0, app.screen.width, margin);
+  top.drawRect(0, 0, app.screen.width, margin - 5);
   const bottom = new PIXI.Graphics();
   bottom.beginFill(0, 1);
-  bottom.drawRect(0, SYMBOL_SIZE * 3 + margin, app.screen.width, margin);
+  bottom.drawRect(
+    0,
+    SYMBOL_SIZE * 3 + margin - 5,
+    app.screen.width,
+    margin + 5
+  );
   const textureButton = PIXI.Texture.from("button.png");
+  const left = new PIXI.Graphics();
+  left.beginFill(0, 1);
+  left.drawRect(
+    0,
+    margin - 5,
+    Math.round(app.screen.width - REEL_WIDTH * 5) / 2,
+    app.screen.height - margin * 2
+  );
+  const right = new PIXI.Graphics();
+  right.beginFill(0, 1);
+  right.drawRect(
+    Math.round(app.screen.width - (app.screen.width - REEL_WIDTH * 5) / 2),
+    margin - 5,
+    Math.round(app.screen.width - REEL_WIDTH * 5) / 2,
+    app.screen.height - margin * 2
+  );
 
   // Build and position button
   const button = new PIXI.Sprite(textureButton);
@@ -166,6 +187,8 @@ function onAssetsLoaded() {
 
   app.stage.addChild(top);
   app.stage.addChild(bottom);
+  app.stage.addChild(left);
+  app.stage.addChild(right);
 
   // Set the interactivity
   button.interactive = true;
