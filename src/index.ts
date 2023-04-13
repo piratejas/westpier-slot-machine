@@ -55,6 +55,7 @@ function onAssetsLoaded() {
 
   interface Reel {
     container: PIXI.Container;
+    strip: number[];
     symbols: PIXI.Sprite[];
     position: number;
     previousPosition: number;
@@ -69,18 +70,25 @@ function onAssetsLoaded() {
 
     const reel: Reel = {
       container: rc,
+      strip: [],
       symbols: [],
       position: 0,
       previousPosition: 0,
       blur: new PIXI.BlurFilter(),
     };
+    const randomStartIndex = Math.floor(Math.random() * reelStrips[i].length);
+    const randomStartSequence = [
+      ...reelStrips[i].slice(randomStartIndex),
+      ...reelStrips[i].slice(0, randomStartIndex),
+    ];
+    reel.strip.push(...randomStartSequence);
     reel.blur.blurX = 0;
     reel.blur.blurY = 0;
     rc.filters = [reel.blur];
 
     // Build the symbols
-    for (let j = 0; j < reelStrips[i].length; j++) {
-      const texturesIndex = reelStrips[i][j];
+    for (let j = 0; j < reel.strip.length; j++) {
+      const texturesIndex = reel.strip[j];
       const symbol = new PIXI.Sprite(slotTextures[texturesIndex]);
       // Scale the symbol to fit symbol area
       symbol.y = j * SYMBOL_SIZE;
