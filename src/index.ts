@@ -27,6 +27,7 @@ PIXI.Assets.load([
   "zero.png",
 ]).then(onAssetsLoaded);
 
+// Add sound effects
 sound.add("spin", "spinning.wav");
 sound.add("stop", "stop.wav");
 sound.volume("spin", 0.01);
