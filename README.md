@@ -29,4 +29,5 @@ https://www.pixijselementals.com/
 https://createjs.com/docs/tweenjs/modules/TweenJS.html  
 https://github.com/tweenjs/tween.js/blob/HEAD/docs/user_guide.md  
 https://www.trysmudford.com/blog/linear-interpolation-functions/  
-[Tween Movements with JavaScript](https://www.youtube.com/watch?v=YKb50865IG8)
+[Tween Movements with JavaScript](https://www.youtube.com/watch?v=YKb50865IG8)  
+https://pixijs.io/sound/examples/index.html
