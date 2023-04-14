@@ -75,7 +75,7 @@ module.exports = (env, argv) => {
       // Make an index.html from the template
       new HtmlWebpackPlugin({
         template: "./src/index.ejs",
-        favicon: `${path}/favicon.ico`,
+        favicon: "./static/favicon.ico",
         hash: true,
         minify: false,
       }),
