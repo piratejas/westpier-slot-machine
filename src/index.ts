@@ -240,13 +240,13 @@ function onAssetsLoaded() {
 
   function isWinLineSymbol(currentReel) {
     const winLineSymbol = currentReel.symbols.find(
-      (symbol) => Math.round(symbol.y) === 150
+      (symbol: PIXI.Sprite) => Math.round(symbol.y) === 150
     )._texture.textureCacheIds;
     console.log(winLineSymbol);
     line.push(winLineSymbol);
   }
 
-  function checkWinLine(line) {
+  function checkWinLine(line: string[]) {
     const win = line.every((x, i, a) => x === a[0]);
     console.log(win ? "You won!" : "Try again!");
   }
