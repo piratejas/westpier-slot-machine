@@ -224,13 +224,31 @@ function onAssetsLoaded() {
         })
         .easing(backout(0.2))
         .onComplete(() => {
+          isWinLineSymbol(r);
           if (i === reels.length - 1) {
             running = false;
+            checkWinLine(line);
           }
           sound.play("stop");
         })
         .start();
     }
+  }
+
+  // Function to check win line
+  let line: string[] = [];
+
+  function isWinLineSymbol(currentReel) {
+    const winLineSymbol = currentReel.symbols.find(
+      (symbol: PIXI.Sprite) => Math.round(symbol.y) === 150
+    )._texture.textureCacheIds;
+    console.log(winLineSymbol);
+    line.push(winLineSymbol);
+  }
+
+  function checkWinLine(line: string[]) {
+    const win = line.every((x, i, a) => x === a[0]);
+    console.log(win ? "You won!" : "Try again!");
   }
 
   // Listen for animate update
